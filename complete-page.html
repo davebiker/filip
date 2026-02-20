@@ -16,45 +16,29 @@
   --cream:      #f7f5f0;
   --text:       #1a1a1a;
   --muted:      #6b6b6b;
-
-  /* spacing scale */
-  --sp-xs:  12px;
-  --sp-sm:  20px;
-  --sp-md:  32px;
-  --sp-lg:  56px;
-  --sp-xl:  80px;
-
-  /* safe side padding */
-  --pad: 20px;
 }
 
 html { scroll-behavior: smooth; }
+body { font-family: 'Jost', sans-serif; color: var(--text); background: #fff; -webkit-font-smoothing: antialiased; }
+img { display: block; width: 100%; }
 
-body {
-  font-family: 'Jost', sans-serif;
-  color: var(--text);
-  background: #fff;
-  -webkit-font-smoothing: antialiased;
-}
 
-img { display: block; max-width: 100%; }
-
-/* ═══════════════════════════════════
-   NAVIGACE  — mobile first
-═══════════════════════════════════ */
+/* ════════════════════════════════════════
+   NAVIGACE
+════════════════════════════════════════ */
 nav {
   position: fixed;
   top: 0; left: 0; right: 0;
-  z-index: 100;
+  z-index: 200;
   height: 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--pad);
-  background: rgba(255,255,255,0.94);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(0,0,0,0.07);
+  padding: 0 18px;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
 }
 
 .nav-logo {
@@ -63,122 +47,101 @@ nav {
   font-weight: 700;
   color: var(--green-dark);
   text-decoration: none;
-  letter-spacing: -0.3px;
-  flex-shrink: 0;
 }
-
 .nav-logo em { font-style: italic; color: var(--gold); }
 
-/* Hamburger — viditelný jen na mobilu */
-.nav-hamburger {
+/* Hamburger */
+.hamburger {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 5px;
+  width: 40px; height: 40px;
   cursor: pointer;
-  padding: 6px;
-  border: none;
-  background: none;
+  background: none; border: none;
+  padding: 8px;
 }
-
-.nav-hamburger span {
-  display: block;
-  width: 22px;
-  height: 2px;
+.hamburger span {
+  display: block; width: 100%; height: 2px;
   background: var(--green-dark);
   border-radius: 2px;
-  transition: all 0.3s;
+  transition: transform 0.3s, opacity 0.3s;
 }
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-/* Mobile menu drawer */
+/* Drawer */
 .nav-drawer {
+  display: none;
   position: fixed;
   top: 56px; left: 0; right: 0;
   background: #fff;
   border-bottom: 1px solid rgba(0,0,0,0.08);
-  padding: var(--sp-sm) var(--pad);
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  transform: translateY(-110%);
-  transition: transform 0.3s ease;
-  z-index: 99;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  z-index: 199;
+  padding: 8px 18px 20px;
 }
-
-.nav-drawer.open { transform: translateY(0); }
-
+.nav-drawer.open { display: block; }
 .nav-drawer a {
   display: block;
-  padding: 12px 0;
+  padding: 14px 0;
   font-size: 13px;
+  font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
-  font-weight: 600;
   color: var(--text);
   text-decoration: none;
   border-bottom: 1px solid rgba(0,0,0,0.06);
-  transition: color 0.2s;
 }
-
-.nav-drawer a:hover { color: var(--green-dark); }
-
-.nav-drawer .nav-cta-mobile {
-  margin-top: 10px;
-  text-align: center;
-  padding: 13px;
-  background: var(--green-dark);
+.nav-drawer a:last-child { border-bottom: none; }
+.nav-cta-mobile {
+  margin-top: 12px !important;
+  background: var(--green-dark) !important;
   color: #fff !important;
+  text-align: center;
   border-radius: 8px;
-  border: none;
+  padding: 14px !important;
+  border-bottom: none !important;
 }
 
-/* Desktop nav links — skryté na mobilu */
-.nav-links-desktop {
-  display: none;
-}
+/* Desktop nav — skryté na mobilu */
+.nav-desktop { display: none; }
 
-.nav-cta-desktop { display: none; }
 
-/* ═══════════════════════════════════
-   HERO  — mobile first
-═══════════════════════════════════ */
+/* ════════════════════════════════════════
+   HERO
+════════════════════════════════════════ */
 .hero {
   position: relative;
-  width: 100%;
-  height: 100svh;
-  min-height: 500px;
+  margin-top: 56px;
+  height: calc(100svh - 56px);
+  min-height: 480px;
   overflow: hidden;
-  margin-top: 56px; /* nav height */
 }
 
 .hero-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&auto=format&q=80')
-    center/cover no-repeat;
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&auto=format&q=80') center/cover no-repeat;
 }
 
 .hero-gradient {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(0,0,0,0.04) 0%,
-      rgba(0,0,0,0.08) 30%,
-      rgba(0,0,0,0.55) 65%,
-      rgba(0,0,0,0.86) 100%
-    );
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.03) 0%,
+    rgba(0,0,0,0.06) 30%,
+    rgba(0,0,0,0.55) 65%,
+    rgba(0,0,0,0.88) 100%
+  );
 }
 
 .hero-content {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 0 var(--pad) 40px;
+  padding: 0 22px 40px;
 }
 
 .hero-label {
@@ -191,12 +154,11 @@ nav {
 
 .hero-headline {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(40px, 10vw, 96px);
+  font-size: clamp(38px, 11vw, 96px);
   font-weight: 900;
-  line-height: 1.06;
+  line-height: 1.05;
   color: #fff;
 }
-
 .hero-headline em {
   font-style: italic;
   font-weight: 700;
@@ -204,76 +166,86 @@ nav {
   text-shadow: 0 0 50px rgba(130,180,40,0.4);
 }
 
-.hero-scroll {
-  display: none; /* skryté na malých displejích */
-}
 
-/* ═══════════════════════════════════
-   SDÍLENÉ UTILITY
-═══════════════════════════════════ */
+/* ════════════════════════════════════════
+   UTILITY
+════════════════════════════════════════ */
 .section-label {
   font-size: 10px;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--gold);
   font-weight: 500;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .section-heading {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(28px, 7vw, 50px);
+  font-size: clamp(28px, 8vw, 52px);
   font-weight: 900;
   line-height: 1.1;
 }
+.section-heading em { font-style: italic; color: var(--green-dark); }
 
-.section-heading em {
-  font-style: italic;
-  color: var(--green-dark);
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #d8d2c8, transparent);
+  margin: 0 22px;
 }
 
-/* ═══════════════════════════════════
-   VIDEA  — mobile first
-═══════════════════════════════════ */
+
+/* ════════════════════════════════════════
+   VIDEA — MOBILE LAYOUT (default)
+════════════════════════════════════════ */
 .videos-section {
-  padding: var(--sp-lg) var(--pad);
+  padding: 48px 22px;
 }
 
-/* Hero video blok — mobil: stack, desktop: side-by-side */
-.video-hero-layout {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-md);
-  margin-bottom: var(--sp-lg);
+/* Vždy stack na mobilu */
+.video-main-text {
+  margin-bottom: 28px;
 }
 
-.video-hero-text p {
+.video-main-text p {
   font-size: 15px;
   line-height: 1.8;
   color: var(--muted);
-  margin: 16px 0 28px;
+  margin: 16px 0 26px;
 }
 
+/* Stats — 3 vedle sebe, žádné lámání */
 .stats {
   display: flex;
-  gap: 28px;
+  flex-direction: row;
+  gap: 0;
   border-top: 1px solid #e8e3dc;
   padding-top: 22px;
-  flex-wrap: wrap;
+}
+
+.stat-item {
+  flex: 1;
+  padding-right: 12px;
+}
+
+.stat-item + .stat-item {
+  padding-left: 12px;
+  border-left: 1px solid #e8e3dc;
+  padding-right: 0;
 }
 
 .stat-num {
   font-family: 'Playfair Display', serif;
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   color: var(--text);
   display: block;
-  white-space: nowrap; /* zabrání lámání 2 495 */
+  line-height: 1.1;
+  white-space: nowrap;
 }
 
 .stat-label {
   font-size: 10px;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--muted);
   margin-top: 4px;
@@ -283,22 +255,22 @@ nav {
 /* Main video thumbnail */
 .video-thumb {
   position: relative;
-  border-radius: 14px;
+  border-radius: 12px;
   overflow: hidden;
   background: var(--green-dark);
   aspect-ratio: 16/10;
   cursor: pointer;
-  box-shadow: 0 16px 50px rgba(30,61,47,0.2);
+  box-shadow: 0 12px 40px rgba(30,61,47,0.2);
+  margin-bottom: 40px;
 }
 
 .video-thumb img {
   width: 100%; height: 100%;
   object-fit: cover;
   opacity: 0.6;
-  transition: opacity 0.5s, transform 0.7s;
+  transition: opacity 0.5s, transform 0.6s;
 }
-
-.video-thumb:hover img { opacity: 0.4; transform: scale(1.04); }
+.video-thumb:active img { opacity: 0.4; }
 
 .video-thumb-overlay {
   position: absolute; inset: 0;
@@ -308,32 +280,23 @@ nav {
 }
 
 .play-btn {
-  width: 58px; height: 58px;
+  width: 56px; height: 56px;
   border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.75);
+  border: 2px solid rgba(255,255,255,0.8);
   display: flex; align-items: center; justify-content: center;
   color: #fff;
-  transition: background 0.3s, transform 0.3s;
-  flex-shrink: 0;
 }
-
-.video-thumb:hover .play-btn {
-  background: rgba(255,255,255,0.18);
-  transform: scale(1.1);
-}
-
 .play-btn svg { width: 20px; height: 20px; margin-left: 4px; }
 
 .vcap-title {
   font-family: 'Playfair Display', serif;
   font-style: italic;
-  font-size: 16px;
+  font-size: 15px;
   color: #fff;
   text-align: center;
   display: block;
   margin-bottom: 3px;
 }
-
 .vcap-sub {
   font-size: 10px;
   letter-spacing: 3px;
@@ -343,10 +306,10 @@ nav {
   display: block;
 }
 
-/* Video grid — 1 sloupec mobil, 3 desktop */
+/* Video grid — SINGLE COLUMN na mobilu */
 .videos-grid {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 14px;
 }
 
@@ -357,41 +320,36 @@ nav {
   aspect-ratio: 16/9;
   position: relative;
   cursor: pointer;
-  box-shadow: 0 6px 24px rgba(0,0,0,0.1);
 }
 
 .video-card img {
   width: 100%; height: 100%;
   object-fit: cover;
   opacity: 0.6;
-  transition: opacity 0.4s, transform 0.6s;
 }
-
-.video-card:hover img { opacity: 0.38; transform: scale(1.05); }
 
 .vc-overlay {
   position: absolute; inset: 0;
   display: flex; flex-direction: column;
   justify-content: flex-end;
   padding: 16px 18px;
-  background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 60%);
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 60%);
 }
 
 .vc-title {
   font-family: 'Playfair Display', serif;
   font-style: italic;
-  font-size: 16px;
+  font-size: 17px;
   color: #fff;
   display: block;
   margin-bottom: 4px;
-  line-height: 1.3;
 }
 
 .vc-meta {
   font-size: 10px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.52);
+  color: rgba(255,255,255,0.55);
 }
 
 .play-mini {
@@ -399,40 +357,26 @@ nav {
   top: 12px; right: 12px;
   width: 32px; height: 32px;
   border-radius: 50%;
-  border: 1.5px solid rgba(255,255,255,0.6);
+  border: 1.5px solid rgba(255,255,255,0.7);
   display: flex; align-items: center; justify-content: center;
   color: #fff;
-  transition: background 0.3s;
 }
-
-.video-card:hover .play-mini { background: rgba(255,255,255,0.18); }
 .play-mini svg { width: 10px; height: 10px; margin-left: 2px; }
 
-/* ═══════════════════════════════════
-   DIVIDER
-═══════════════════════════════════ */
-.divider-wrap {
-  padding: 0 var(--pad);
-}
 
-.divider {
-  height: 1px;
-  background: linear-gradient(to right, transparent, #d8d2c8, transparent);
-}
-
-/* ═══════════════════════════════════
-   FOTKY Z CEST  — mobile first
-═══════════════════════════════════ */
+/* ════════════════════════════════════════
+   FOTKY Z CEST — SINGLE COLUMN na mobilu
+════════════════════════════════════════ */
 .photos-section {
   background: var(--cream);
-  padding: var(--sp-lg) var(--pad);
+  padding: 48px 22px;
 }
 
 .photos-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 24px;
+  margin-bottom: 22px;
   gap: 12px;
 }
 
@@ -446,71 +390,54 @@ nav {
   border-bottom: 1px solid var(--green-dark);
   padding-bottom: 2px;
   white-space: nowrap;
-  transition: color 0.25s, border-color 0.25s;
-  margin-bottom: 6px;
   flex-shrink: 0;
+  margin-bottom: 4px;
 }
 
-.view-all:hover { color: var(--gold); border-color: var(--gold); }
-
-/* Galerie — mobil: 2 sloupce, tablet: 3, desktop: masonry */
-.photos-grid-mobile {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
+/* MOBILE: jeden sloupec, stacked */
+.photos-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.photos-grid-mobile .photo-item {
-  border-radius: 10px;
+.photo-item {
+  border-radius: 12px;
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  aspect-ratio: 3/4; /* portrait proporce na mobilu */
-}
-
-/* První foto span 2 řádky */
-.photos-grid-mobile .photo-item:first-child {
-  grid-row: span 2;
-  aspect-ratio: unset;
+  aspect-ratio: 4/3; /* landscape na mobilu */
 }
 
 .photo-item img {
   width: 100%; height: 100%;
   object-fit: cover;
-  transition: transform 0.6s ease, filter 0.4s ease;
+  transition: transform 0.5s;
   filter: saturate(0.9);
 }
-
-.photo-item:hover img {
-  transform: scale(1.06);
-  filter: saturate(1.1);
-}
+.photo-item:active img { transform: scale(1.04); }
 
 .photo-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(10,30,18,0.75) 0%, transparent 50%);
-  opacity: 0;
-  transition: opacity 0.3s;
-  display: flex;
-  align-items: flex-end;
-  padding: 12px;
+  background: linear-gradient(to top, rgba(10,30,18,0.7) 0%, transparent 45%);
+  display: flex; align-items: flex-end;
+  padding: 14px 16px;
 }
-
-.photo-item:hover .photo-overlay { opacity: 1; }
 
 .photo-loc {
   font-size: 10px;
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   color: rgba(255,255,255,0.9);
 }
 
-/* ═══════════════════════════════════
+
+/* ════════════════════════════════════════
    FOOTER
-═══════════════════════════════════ */
+════════════════════════════════════════ */
 footer {
   background: var(--green-dark);
-  padding: var(--sp-md) var(--pad);
+  padding: 40px 22px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -525,7 +452,6 @@ footer {
   color: #fff;
   text-decoration: none;
 }
-
 .footer-logo em { font-style: italic; color: #a8cc60; }
 
 .footer-links {
@@ -535,96 +461,98 @@ footer {
   flex-wrap: wrap;
   justify-content: center;
 }
-
 .footer-links a {
   font-size: 11px;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: rgba(255,255,255,0.5);
   text-decoration: none;
-  transition: color 0.25s;
 }
-
 .footer-links a:hover { color: #a8cc60; }
 
 .footer-copy {
   font-size: 11px;
   color: rgba(255,255,255,0.3);
-  letter-spacing: 0.5px;
 }
 
-/* ══════════════════════════════════
-   TABLET  ≥ 640px
-══════════════════════════════════ */
-@media (min-width: 640px) {
-  :root { --pad: 36px; }
 
+/* ════════════════════════════════════════
+   TABLET  ≥ 600px
+════════════════════════════════════════ */
+@media (min-width: 600px) {
+
+  /* Videa: 2 sloupce */
   .videos-grid {
-    grid-template-columns: repeat(2, 1fr);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
   }
 
-  .photos-grid-mobile {
-    grid-template-columns: repeat(3, 1fr);
+  /* Fotky: 2 sloupce */
+  .photos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
   }
 
-  .photos-grid-mobile .photo-item:first-child {
-    grid-row: span 2;
-  }
+  .photo-item { aspect-ratio: 3/4; }
 }
 
-/* ══════════════════════════════════
+
+/* ════════════════════════════════════════
    DESKTOP  ≥ 1024px
-══════════════════════════════════ */
+════════════════════════════════════════ */
 @media (min-width: 1024px) {
-  :root { --pad: 72px; }
 
   /* Nav */
-  nav { height: 68px; }
-
+  nav { height: 68px; padding: 0 64px; }
   .hero { margin-top: 68px; }
-
-  .nav-hamburger { display: none; }
+  .hamburger { display: none; }
   .nav-drawer { display: none !important; }
 
-  .nav-links-desktop {
+  .nav-desktop {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .nav-desktop ul {
     display: flex;
     gap: 36px;
     list-style: none;
   }
 
-  .nav-links-desktop a {
+  .nav-desktop ul a {
     font-size: 12px;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--muted);
     text-decoration: none;
     font-weight: 500;
-    transition: color 0.25s;
+    transition: color 0.2s;
   }
+  .nav-desktop ul a:hover { color: var(--green-dark); }
 
-  .nav-links-desktop a:hover { color: var(--green-dark); }
-
-  .nav-cta-desktop {
-    display: block;
+  .nav-cta {
     font-size: 11px;
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 600;
     color: #fff;
     background: var(--green-dark);
-    padding: 10px 22px;
+    padding: 10px 24px;
     border-radius: 40px;
     text-decoration: none;
-    transition: background 0.3s;
+    white-space: nowrap;
+    transition: background 0.2s;
   }
-
-  .nav-cta-desktop:hover { background: var(--green-mid); }
+  .nav-cta:hover { background: var(--green-mid); }
 
   /* Hero scroll hint */
   .hero-scroll {
-    display: flex;
     position: absolute;
-    bottom: 32px; right: var(--pad);
+    bottom: 32px; right: 64px;
+    display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
@@ -633,62 +561,68 @@ footer {
     letter-spacing: 2px;
     text-transform: uppercase;
     text-decoration: none;
-    transition: color 0.3s;
   }
-
-  .hero-scroll:hover { color: rgba(255,255,255,0.9); }
-
   .scroll-line {
     width: 1px; height: 48px;
     background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
     animation: scrollPulse 2s ease-in-out infinite;
   }
-
   @keyframes scrollPulse {
-    0%, 100% { opacity: 0.5; transform: scaleY(1); }
-    50%       { opacity: 1;   transform: scaleY(0.7) translateY(8px); }
+    0%, 100% { opacity: 0.5; }
+    50%       { opacity: 1; transform: scaleY(0.75) translateY(8px); }
   }
 
-  /* Video hero — side by side */
-  .video-hero-layout {
-    flex-direction: row;
-    align-items: center;
+  /* Videos section */
+  .videos-section { padding: 90px 64px; }
+
+  /* Side-by-side hero layout */
+  .video-hero-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
     gap: 64px;
+    align-items: center;
+    margin-bottom: 56px;
   }
 
-  .video-hero-text { flex: 1; }
-  .video-thumb-wrap { flex: 1.25; }
+  .video-thumb { margin-bottom: 0; }
 
-  /* Video grid — 3 sloupce */
+  .stat-num { font-size: 30px; }
+
+  /* Video grid 3 sloupce */
   .videos-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  /* Photos — masonry style */
-  .photos-grid-mobile {
+  /* Photos section */
+  .photos-section { padding: 90px 64px; }
+
+  /* Masonry 4 sloupce */
+  .photos-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 230px 230px;
+    grid-template-rows: 220px 220px;
     gap: 12px;
   }
 
-  .photos-grid-mobile .photo-item {
-    aspect-ratio: unset;
-    border-radius: 10px;
-  }
+  .photo-item { aspect-ratio: unset; border-radius: 10px; }
 
-  .photos-grid-mobile .photo-item:nth-child(1) { grid-column: 1; grid-row: 1 / 3; }
-  .photos-grid-mobile .photo-item:nth-child(2) { grid-column: 2; grid-row: 1; }
-  .photos-grid-mobile .photo-item:nth-child(3) { grid-column: 3; grid-row: 1; }
-  .photos-grid-mobile .photo-item:nth-child(4) { grid-column: 4; grid-row: 1 / 3; }
-  .photos-grid-mobile .photo-item:nth-child(5) { grid-column: 2; grid-row: 2; }
-  .photos-grid-mobile .photo-item:nth-child(6) { grid-column: 3; grid-row: 2; }
+  .photo-item:nth-child(1) { grid-column: 1; grid-row: 1 / 3; }
+  .photo-item:nth-child(2) { grid-column: 2; grid-row: 1; }
+  .photo-item:nth-child(3) { grid-column: 3; grid-row: 1; }
+  .photo-item:nth-child(4) { grid-column: 4; grid-row: 1 / 3; }
+  .photo-item:nth-child(5) { grid-column: 2; grid-row: 2; }
+  .photo-item:nth-child(6) { grid-column: 3; grid-row: 2; }
+
+  .photo-overlay { opacity: 0; transition: opacity 0.3s; }
+  .photo-item:hover .photo-overlay { opacity: 1; }
+  .photo-item:hover img { transform: scale(1.06); filter: saturate(1.1); }
 
   /* Footer */
   footer {
     flex-direction: row;
     justify-content: space-between;
     text-align: left;
+    padding: 44px 64px;
   }
 }
 </style>
@@ -699,31 +633,32 @@ footer {
 <nav>
   <a href="#" class="nav-logo">Výš<em>e</em></a>
 
-  <!-- Desktop links -->
-  <ul class="nav-links-desktop">
-    <li><a href="#videa">Videa</a></li>
-    <li><a href="#fotky">Fotky</a></li>
-    <li><a href="#">Túry</a></li>
-    <li><a href="#">O blogu</a></li>
-  </ul>
-  <a href="#" class="nav-cta-desktop">Sledovat</a>
+  <!-- Desktop -->
+  <div class="nav-desktop">
+    <ul>
+      <li><a href="#videa">Videa</a></li>
+      <li><a href="#fotky">Fotky</a></li>
+      <li><a href="#">Túry</a></li>
+      <li><a href="#">O blogu</a></li>
+    </ul>
+    <a href="#" class="nav-cta">Sledovat</a>
+  </div>
 
   <!-- Mobile hamburger -->
-  <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
-    <span id="hb1"></span>
-    <span id="hb2"></span>
-    <span id="hb3"></span>
+  <button class="hamburger" id="hbtn" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
   </button>
 </nav>
 
 <!-- Mobile drawer -->
-<div class="nav-drawer" id="nav-drawer">
-  <a href="#videa" onclick="toggleMenu()">Videa</a>
-  <a href="#fotky" onclick="toggleMenu()">Fotky</a>
-  <a href="#" onclick="toggleMenu()">Túry</a>
-  <a href="#" onclick="toggleMenu()">O blogu</a>
-  <a href="#" class="nav-cta-mobile" onclick="toggleMenu()">Sledovat</a>
+<div class="nav-drawer" id="drawer">
+  <a href="#videa" onclick="closeMenu()">Videa</a>
+  <a href="#fotky" onclick="closeMenu()">Fotky</a>
+  <a href="#" onclick="closeMenu()">Túry</a>
+  <a href="#" onclick="closeMenu()">O blogu</a>
+  <a class="nav-cta-mobile" onclick="closeMenu()">Sledovat</a>
 </div>
+
 
 <!-- ════════ HERO ════════ -->
 <section class="hero">
@@ -737,59 +672,65 @@ footer {
       je čistší
     </h1>
   </div>
-  <a href="#videa" class="hero-scroll">
+  <!-- Visible only on desktop via CSS -->
+  <a href="#videa" class="hero-scroll" style="display:none" id="scroll-hint">
     <div class="scroll-line"></div>
     Scroll
   </a>
 </section>
+
 
 <!-- ════════ NEJNOVĚJŠÍ VIDEA ════════ -->
 <section id="videa" class="videos-section">
 
   <div class="section-label">Nejnovější videa</div>
 
-  <div class="video-hero-layout">
-    <!-- Text -->
-    <div class="video-hero-text">
+  <!--
+    Na mobilu: text → thumb → grid (stack)
+    Na desktopu: text | thumb vedle sebe (grid), pak video grid pod ním
+    Wrapper který na desktopu aplikuje side-by-side grid
+  -->
+  <div class="video-hero-wrap">
+
+    <!-- Levý sloupec: text + stats -->
+    <div class="video-main-text">
       <div class="section-heading">
-        Vysoké Tatry —<br>
-        <em>Kriváň</em>
+        Vysoké Tatry —<br><em>Kriváň</em>
       </div>
       <p>Výstup na Kriváň za rozbřesku. Mlha v údolích, slunce nad hřebeny a pocit, že svět pod tebou je jen kulisa.</p>
       <div class="stats">
-        <div>
-          <span class="stat-num">2&nbsp;495</span>
+        <div class="stat-item">
+          <span class="stat-num">2&thinsp;495</span>
           <span class="stat-label">m n. m.</span>
         </div>
-        <div>
+        <div class="stat-item">
           <span class="stat-num">7h</span>
           <span class="stat-label">délka túry</span>
         </div>
-        <div>
+        <div class="stat-item">
           <span class="stat-num">SR</span>
           <span class="stat-label">destinace</span>
         </div>
       </div>
     </div>
 
-    <!-- Video thumb -->
-    <div class="video-thumb-wrap">
-      <div class="video-thumb">
-        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&auto=format" alt="Kriváň za rozbřesku" loading="lazy">
-        <div class="video-thumb-overlay">
-          <div class="play-btn">
-            <svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
-          </div>
-          <div>
-            <span class="vcap-title">Kriváň za rozbřesku</span>
-            <span class="vcap-sub">Vysoké Tatry, SR</span>
-          </div>
+    <!-- Pravý sloupec: hlavní video -->
+    <div class="video-thumb">
+      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&auto=format" alt="Kriváň za rozbřesku" loading="lazy">
+      <div class="video-thumb-overlay">
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <div>
+          <span class="vcap-title">Kriváň za rozbřesku</span>
+          <span class="vcap-sub">Vysoké Tatry, SR</span>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Grid dalších videí -->
+  </div><!-- /video-hero-wrap -->
+
+  <!-- Další videa -->
   <div class="videos-grid">
     <div class="video-card">
       <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&auto=format" alt="Slovenský ráj" loading="lazy">
@@ -797,37 +738,31 @@ footer {
         <span class="vc-title">Slovenský ráj</span>
         <span class="vc-meta">Suchá Belá · 5h</span>
       </div>
-      <div class="play-mini">
-        <svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
-      </div>
+      <div class="play-mini"><svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
     </div>
-
     <div class="video-card">
       <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&auto=format" alt="Malá Fatra" loading="lazy">
       <div class="vc-overlay">
         <span class="vc-title">Malá Fatra</span>
         <span class="vc-meta">Veľký Rozsutec · 6h</span>
       </div>
-      <div class="play-mini">
-        <svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
-      </div>
+      <div class="play-mini"><svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
     </div>
-
     <div class="video-card">
       <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600&auto=format" alt="Beskydy" loading="lazy">
       <div class="vc-overlay">
         <span class="vc-title">Beskydy v zimě</span>
         <span class="vc-meta">Lysá hora · 4h</span>
       </div>
-      <div class="play-mini">
-        <svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
-      </div>
+      <div class="play-mini"><svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
     </div>
   </div>
 
 </section>
 
-<div class="divider-wrap"><div class="divider"></div></div>
+
+<div class="divider"></div>
+
 
 <!-- ════════ FOTKY Z CEST ════════ -->
 <section id="fotky" class="photos-section">
@@ -840,34 +775,38 @@ footer {
     <a href="#" class="view-all">Zobrazit vše →</a>
   </div>
 
-  <div class="photos-grid-mobile">
+  <!-- MOBILE: single column stacked
+       TABLET: 2 columns
+       DESKTOP: masonry 4 columns (via CSS) -->
+  <div class="photos-grid">
     <div class="photo-item">
-      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&auto=format" alt="Tatry" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&auto=format" alt="Tatry" loading="lazy">
       <div class="photo-overlay"><span class="photo-loc">Vysoké Tatry</span></div>
     </div>
     <div class="photo-item">
-      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&auto=format" alt="Šumava" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&auto=format" alt="Šumava" loading="lazy">
       <div class="photo-overlay"><span class="photo-loc">Šumava</span></div>
     </div>
     <div class="photo-item">
-      <img src="https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=600&auto=format" alt="Beskydy" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=800&auto=format" alt="Beskydy" loading="lazy">
       <div class="photo-overlay"><span class="photo-loc">Beskydy</span></div>
     </div>
     <div class="photo-item">
-      <img src="https://images.unsplash.com/photo-1520962922320-2038eebab146?w=600&auto=format" alt="Morskie Oko" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1520962922320-2038eebab146?w=800&auto=format" alt="Morskie Oko" loading="lazy">
       <div class="photo-overlay"><span class="photo-loc">Morskie Oko</span></div>
     </div>
     <div class="photo-item">
-      <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&auto=format" alt="Slovenský ráj" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&auto=format" alt="Slovenský ráj" loading="lazy">
       <div class="photo-overlay"><span class="photo-loc">Slovenský ráj</span></div>
     </div>
     <div class="photo-item">
-      <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600&auto=format" alt="Malá Fatra" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&auto=format" alt="Malá Fatra" loading="lazy">
       <div class="photo-overlay"><span class="photo-loc">Malá Fatra</span></div>
     </div>
   </div>
 
 </section>
+
 
 <!-- ════════ FOOTER ════════ -->
 <footer>
@@ -880,17 +819,29 @@ footer {
   <span class="footer-copy">© 2025 · Všechna práva vyhrazena</span>
 </footer>
 
+
 <script>
-  let menuOpen = false;
+  // Show scroll hint only on desktop
+  if (window.innerWidth >= 1024) {
+    document.getElementById('scroll-hint').style.display = 'flex';
+  }
 
   function toggleMenu() {
-    menuOpen = !menuOpen;
-    document.getElementById('nav-drawer').classList.toggle('open', menuOpen);
-    // animate hamburger → X
-    document.getElementById('hb1').style.transform = menuOpen ? 'rotate(45deg) translate(5px,5px)' : '';
-    document.getElementById('hb2').style.opacity   = menuOpen ? '0' : '1';
-    document.getElementById('hb3').style.transform = menuOpen ? 'rotate(-45deg) translate(5px,-5px)' : '';
+    const btn = document.getElementById('hbtn');
+    const drawer = document.getElementById('drawer');
+    const open = drawer.classList.toggle('open');
+    btn.classList.toggle('open', open);
   }
+
+  function closeMenu() {
+    document.getElementById('hbtn').classList.remove('open');
+    document.getElementById('drawer').classList.remove('open');
+  }
+
+  // Close drawer on outside click
+  document.addEventListener('click', e => {
+    if (!e.target.closest('nav') && !e.target.closest('#drawer')) closeMenu();
+  });
 </script>
 
 </body>
