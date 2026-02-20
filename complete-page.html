@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hory, příroda & dobrodružství</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,600;1,700&family=Jost:wght@300;400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --green-dark: #1e3d2f;
+    --green-mid:  #2c5440;
+    --gold:       #b8922a;
+    --cream:      #f7f5f0;
+    --text:       #1a1a1a;
+    --muted:      #6b6b6b;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    color: var(--text);
+    background: #fff;
+  }
+
+  /* ═══════════════════════════════════════
+     NAVIGACE
+  ═══════════════════════════════════════ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 68px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--green-dark);
+    text-decoration: none;
+    letter-spacing: -0.3px;
+  }
+
+  .nav-logo em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.25s;
+  }
+
+  .nav-links a:hover { color: var(--green-dark); }
+
+  .nav-cta {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #fff;
+    background: var(--green-dark);
+    padding: 10px 22px;
+    border-radius: 40px;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+
+  .nav-cta:hover { background: var(--green-mid); }
+
+  /* ═══════════════════════════════════════
+     HERO
+  ═══════════════════════════════════════ */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1800&auto=format&q=85')
+      center/cover no-repeat;
+    transform: scale(1.04);
+    transition: transform 8s ease-out;
+  }
+
+  .hero:hover .hero-bg { transform: scale(1.0); }
+
+  .hero-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.05) 0%,
+        rgba(0,0,0,0.08) 35%,
+        rgba(0,0,0,0.52) 68%,
+        rgba(0,0,0,0.84) 100%
+      );
+  }
+
+  .hero-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 72px 72px;
+    max-width: 900px;
+  }
+
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 16px;
+  }
+
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 900;
+    line-height: 1.05;
+    color: #fff;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    font-weight: 700;
+    color: #a8cc60;
+    text-shadow: 0 0 50px rgba(130,180,40,0.4);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 32px;
+    right: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255,255,255,0.5);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .hero-scroll:hover { color: rgba(255,255,255,0.9); }
+
+  .scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.5; transform: scaleY(1); }
+    50%       { opacity: 1;   transform: scaleY(0.7) translateY(8px); }
+  }
+
+  /* ═══════════════════════════════════════
+     SDÍLENÉ
+  ═══════════════════════════════════════ */
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 14px;
+  }
+
+  /* ═══════════════════════════════════════
+     NEJNOVĚJŠÍ VIDEA
+  ═══════════════════════════════════════ */
+  .videos-section {
+    padding: 100px 72px;
+    max-width: 1380px;
+    margin: 0 auto;
+  }
+
+  .videos-hero {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 64px;
+    align-items: center;
+    margin-bottom: 56px;
+  }
+
+  .videos-hero-info h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 3.8vw, 56px);
+    line-height: 1.08;
+    font-weight: 900;
+    margin-bottom: 6px;
+  }
+
+  .videos-hero-info h2 em {
+    font-style: italic;
+    color: var(--green-dark);
+    display: block;
+  }
+
+  .videos-hero-info p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin: 22px 0 38px;
+    max-width: 420px;
+  }
+
+  .stats {
+    display: flex;
+    gap: 44px;
+    border-top: 1px solid #e8e3dc;
+    padding-top: 26px;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--text);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 5px;
+    display: block;
+  }
+
+  /* Video thumb */
+  .video-thumb {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--green-dark);
+    aspect-ratio: 16/10;
+    cursor: pointer;
+    box-shadow: 0 24px 70px rgba(30,61,47,0.22);
+  }
+
+  .video-thumb img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+    transition: opacity 0.5s, transform 0.7s;
+  }
+
+  .video-thumb:hover img { opacity: 0.4; transform: scale(1.04); }
+
+  .video-thumb-overlay {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 18px;
+  }
+
+  .play-btn {
+    width: 66px; height: 66px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.75);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    transition: background 0.3s, transform 0.3s;
+  }
+
+  .video-thumb:hover .play-btn {
+    background: rgba(255,255,255,0.18);
+    transform: scale(1.1);
+  }
+
+  .play-btn svg { width: 22px; height: 22px; margin-left: 4px; }
+
+  .vcap-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: #fff;
+    display: block;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .vcap-sub {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    display: block;
+    text-align: center;
+  }
+
+  /* Video grid */
+  .videos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .video-card {
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--green-mid);
+    aspect-ratio: 16/10;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  }
+
+  .video-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.55;
+    transition: opacity 0.4s, transform 0.6s;
+  }
+
+  .video-card:hover img { opacity: 0.35; transform: scale(1.06); }
+
+  .vc-overlay {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 18px 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 60%);
+  }
+
+  .vc-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: #fff;
+    display: block;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .vc-meta {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.52);
+  }
+
+  .play-mini {
+    position: absolute;
+    top: 14px; right: 14px;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.6);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    transition: background 0.3s;
+  }
+
+  .video-card:hover .play-mini { background: rgba(255,255,255,0.18); }
+  .play-mini svg { width: 11px; height: 11px; margin-left: 2px; }
+
+  /* ═══════════════════════════════════════
+     DIVIDER
+  ═══════════════════════════════════════ */
+  .divider-wrap {
+    padding: 0 72px;
+    max-width: 1380px;
+    margin: 0 auto;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #d8d2c8, transparent);
+  }
+
+  /* ═══════════════════════════════════════
+     FOTKY Z CEST
+  ═══════════════════════════════════════ */
+  .photos-section {
+    background: var(--cream);
+    padding: 100px 72px;
+  }
+
+  .photos-inner {
+    max-width: 1380px;
+    margin: 0 auto;
+  }
+
+  .photos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 36px;
+  }
+
+  .photos-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 3.5vw, 50px);
+    font-weight: 900;
+    line-height: 1.1;
+  }
+
+  .photos-header h2 em {
+    font-style: italic;
+    color: var(--green-dark);
+  }
+
+  .view-all {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--green-dark);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid var(--green-dark);
+    padding-bottom: 2px;
+    transition: color 0.3s, border-color 0.3s;
+    white-space: nowrap;
+    margin-bottom: 8px;
+  }
+
+  .view-all:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* Masonry grid */
+  .photos-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 230px 230px;
+    gap: 12px;
+  }
+
+  .photo-item {
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .photo-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.65s ease, filter 0.4s ease;
+    filter: saturate(0.88);
+  }
+
+  .photo-item:hover img {
+    transform: scale(1.07);
+    filter: saturate(1.1);
+  }
+
+  .photo-item:nth-child(1) { grid-column: 1; grid-row: 1 / 3; }
+  .photo-item:nth-child(2) { grid-column: 2; grid-row: 1; }
+  .photo-item:nth-child(3) { grid-column: 3; grid-row: 1; }
+  .photo-item:nth-child(4) { grid-column: 4; grid-row: 1 / 3; }
+  .photo-item:nth-child(5) { grid-column: 2; grid-row: 2; }
+  .photo-item:nth-child(6) { grid-column: 3; grid-row: 2; }
+
+  .photo-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,30,18,0.78) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.35s;
+    display: flex;
+    align-items: flex-end;
+    padding: 18px;
+  }
+
+  .photo-item:hover .photo-overlay { opacity: 1; }
+
+  .photo-loc {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.88);
+    font-weight: 400;
+  }
+
+  /* ═══════════════════════════════════════
+     FOOTER
+  ═══════════════════════════════════════ */
+  footer {
+    background: var(--green-dark);
+    padding: 56px 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .footer-logo em { font-style: italic; color: #a8cc60; }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 1px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+
+  .footer-links a:hover { color: #a8cc60; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ NAVIGACE ══════════ -->
+<nav>
+  <a href="#" class="nav-logo">Výš<em>e</em></a>
+  <ul class="nav-links">
+    <li><a href="#videa">Videa</a></li>
+    <li><a href="#fotky">Fotky</a></li>
+    <li><a href="#">Túry</a></li>
+    <li><a href="#">O blogu</a></li>
+  </ul>
+  <a href="#" class="nav-cta">Sledovat</a>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-gradient"></div>
+  <div class="hero-content">
+    <p class="hero-label">Hory, příroda &amp; dobrodružství</p>
+    <h1 class="hero-headline">
+      Hledám krásu tam,<br>
+      kde <em>vzduch</em><br>
+      je čistší
+    </h1>
+  </div>
+  <a href="#videa" class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </a>
+</section>
+
+<!-- ══════════ NEJNOVĚJŠÍ VIDEA ══════════ -->
+<section id="videa" class="videos-section">
+
+  <div class="section-label">Nejnovější videa</div>
+
+  <div class="videos-hero">
+    <div class="videos-hero-info">
+      <h2>
+        Vysoké Tatry —
+        <em>Kriváň</em>
+      </h2>
+      <p>Výstup na Kriváň za rozbřesku. Mlha v údolích, slunce nad hřebeny a pocit, že svět pod tebou je jen kulisa.</p>
+      <div class="stats">
+        <div>
+          <span class="stat-num">2 495</span>
+          <span class="stat-label">m n. m.</span>
+        </div>
+        <div>
+          <span class="stat-num">7h</span>
+          <span class="stat-label">délka túry</span>
+        </div>
+        <div>
+          <span class="stat-num">SR</span>
+          <span class="stat-label">destinace</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-thumb">
+      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&auto=format" alt="Kriváň za rozbřesku">
+      <div class="video-thumb-overlay">
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <div>
+          <span class="vcap-title">Kriváň za rozbřesku</span>
+          <span class="vcap-sub">Vysoké Tatry, SR</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="videos-grid">
+    <div class="video-card">
+      <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&auto=format" alt="Slovenský ráj">
+      <div class="vc-overlay">
+        <span class="vc-title">Slovenský ráj</span>
+        <span class="vc-meta">Suchá Belá · 5h</span>
+      </div>
+      <div class="play-mini">
+        <svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&auto=format" alt="Malá Fatra">
+      <div class="vc-overlay">
+        <span class="vc-title">Malá Fatra</span>
+        <span class="vc-meta">Veľký Rozsutec · 6h</span>
+      </div>
+      <div class="play-mini">
+        <svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600&auto=format" alt="Beskydy">
+      <div class="vc-overlay">
+        <span class="vc-title">Beskydy v zimě</span>
+        <span class="vc-meta">Lysá hora · 4h</span>
+      </div>
+      <div class="play-mini">
+        <svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<div class="divider-wrap"><div class="divider"></div></div>
+
+<!-- ══════════ FOTKY Z CEST ══════════ -->
+<section id="fotky" class="photos-section">
+  <div class="photos-inner">
+
+    <div class="photos-header">
+      <div>
+        <div class="section-label">Galerie</div>
+        <h2>Fotky <em>z cest</em></h2>
+      </div>
+      <a href="#" class="view-all">Zobrazit vše →</a>
+    </div>
+
+    <div class="photos-grid">
+      <div class="photo-item">
+        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&auto=format" alt="Tatry">
+        <div class="photo-overlay"><span class="photo-loc">Vysoké Tatry</span></div>
+      </div>
+      <div class="photo-item">
+        <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&auto=format" alt="Šumava">
+        <div class="photo-overlay"><span class="photo-loc">Šumava</span></div>
+      </div>
+      <div class="photo-item">
+        <img src="https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=600&auto=format" alt="Beskydy">
+        <div class="photo-overlay"><span class="photo-loc">Beskydy</span></div>
+      </div>
+      <div class="photo-item">
+        <img src="https://images.unsplash.com/photo-1520962922320-2038eebab146?w=600&auto=format" alt="Morskie Oko">
+        <div class="photo-overlay"><span class="photo-loc">Morskie Oko</span></div>
+      </div>
+      <div class="photo-item">
+        <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&auto=format" alt="Slovenský ráj">
+        <div class="photo-overlay"><span class="photo-loc">Slovenský ráj</span></div>
+      </div>
+      <div class="photo-item">
+        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600&auto=format" alt="Malá Fatra">
+        <div class="photo-overlay"><span class="photo-loc">Malá Fatra</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <a href="#" class="footer-logo">Výš<em>e</em></a>
+  <span class="footer-copy">© 2025 · Všechna práva vyhrazena</span>
+  <ul class="footer-links">
+    <li><a href="#">Instagram</a></li>
+    <li><a href="#">YouTube</a></li>
+    <li><a href="#">Kontakt</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>
